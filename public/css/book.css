@@ -1,0 +1,40 @@
+.info {
+    margin: 40px 0;
+    display: flex;
+    align-items: center;
+}
+
+.info .img {
+    margin-right: 50px;
+}
+
+.info img {
+    max-width: 400px;
+}
+
+.info hr {
+    border: none;
+    color: #ff5644;
+    background-color: #ff5644;
+    height: 1px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.info .desc {
+    width: 100%;
+}
+
+.info .desc h2 {
+    color: #ff5644;
+}
+
+.info .desc p {
+    line-height: 160%;
+    margin-top: 5px;
+}
+
+.btn {
+    width: 200px;
+    background: #ff5644;
+}
