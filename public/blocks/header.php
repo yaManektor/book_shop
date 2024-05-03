@@ -28,4 +28,10 @@
             <li><a href="/category/children">Дитяча література</a></li>
         </ul>
     </div>
+
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="container error">
+            <p><?=$_SESSION['error']?></p>
+        </div>
+    <?php endif; ?>
 </header>

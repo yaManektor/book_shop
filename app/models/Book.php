@@ -64,16 +64,17 @@ class Book
                          ->fetch(PDO::FETCH_OBJ);
     }
 
-    public function addBook(string $title, string $desc, string $category, string $author, int $price): bool
+    public function addBook(string $title, string $desc, string $category, string $author, string $img, int $price): bool
     {
         return $this->_db->prepare("INSERT INTO `books`
                                             (`title`, `descript`, `author_id`, `category_id`, `img`, `price`) VALUES
-                                            (:title, :descript, :author, :category, 'noimage.png', :price)")
+                                            (:title, :descript, :author, :category, :img, :price)")
                          ->execute([
                              'title' => $title,
                              'descript' => $desc,
                              'author' => $author,
                              'category' => $category,
+                             'img' => $img,
                              'price' => $price,
                          ]);
     }

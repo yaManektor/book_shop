@@ -28,14 +28,41 @@ class BookController extends Controller
     public function add(): void
     {
         if (isset($_POST['title'])) {
+            session_start();
+
             $book = $this->model('Book');
-            if (!$book->addBook($_POST['title'], $_POST['description'], $_POST['category'],
-                               $_POST['author'], $_POST['price'])) {
-                echo 'Виникла помилка додавання книги до бази даних';
-                exit();
-            }
+
+            // Random image
+            $images = ['book.png', 'book_icon.jpg', 'noimage.png'];
+
+            // Validate add book form
+            $error = $this->validateBook();
+
+            if ($error == 'none') {
+                // Validate book title and description
+                $_POST['title'] = $this->validateData($_POST['title']);
+                $_POST['description'] = $this->validateData($_POST['description']);
+
+                // Add new book
+                $book->addBook($_POST['title'], $_POST['description'], $_POST['category'],
+                               $_POST['author'], $images[rand(0, count($images) - 1)], $_POST['price']);
+
+                // Destroy session if set
+                unset($_SESSION['error']);
+            } else
+                $_SESSION['error'] = $error;
         }
 
         header('Location: /');
+    }
+
+    private function validateBook(): string
+    {
+        if (strlen($_POST['title']) < 3 || strlen($_POST['title']) > 50)
+            return 'Введіть коректну назву книги';
+        elseif (!is_numeric($_POST['price']))
+            return 'Введіть коректну ціну';
+        else
+            return 'none';
     }
 }

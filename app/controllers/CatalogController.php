@@ -10,6 +10,8 @@ class CatalogController extends Controller
 
     public function index(): void
     {
+        session_start();
+
         $data = [
             'title' => 'BookShop',
             'description' => 'Головна сторінка магазину книг',
@@ -33,6 +35,8 @@ class CatalogController extends Controller
         $data['books'] = $this->sortBooksByTitle($data['books']);
 
         $this->view('catalog/index', $data);
+
+        unset($_SESSION['error']);
     }
 
     public function search(): void
@@ -40,7 +44,7 @@ class CatalogController extends Controller
         $data = [
             'title' => 'Пошук по сайту',
             'description' => 'Пошук книги по назві',
-            'search_title' => !empty($_POST['search']) ? $_POST['search'] : null
+            'search_title' => !empty($_POST['search']) && $_POST['search'] != '\'' ? $this->validateData($_POST['search']) : null
         ];
 
         // Get book categories and authors
